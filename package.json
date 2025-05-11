@@ -1,0 +1,16 @@
+{
+  "name": "nodegame",
+  "version": "1.0.0",
+  "description": "NodeJS Game Engine",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js --debug"
+  },
+  "author": "Jacob Sweeten",
+  "license": "GPL",
+  "dependencies": {
+    "@types/node": "^22.15.17",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
+  }
+}
