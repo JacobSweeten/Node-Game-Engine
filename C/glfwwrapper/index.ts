@@ -2,7 +2,10 @@ const {
 	glfwInitWrapper,
 	glfwCreateWindowWrapper,
 	glfwWindowShouldCloseWrapper,
-	glfwPollEventsWrapper
+	glfwPollEventsWrapper,
+	glfwTerminateWrapper,
+	glfwMakeContextCurrentWrapper,
+	glfwSwapBuffersWrapper
 } = require("./build/Release/binding");
 
 var GLFWInitialized = false;
@@ -45,6 +48,7 @@ export async function glfwInit(GLFWOptionsData: GLFWOptions): Promise<void> {
 
 export async function glfwTerminate() : Promise<void> {
 	initCheck();
+	glfwTerminateWrapper();
 	GLFWInitialized = false;
 }
 
@@ -83,4 +87,14 @@ export async function glfwWindowShouldClose(GLFWWindow: GLFWWindowRef) : Promise
 export async function glfwPollEvents() : Promise<void>
 {
 	glfwPollEventsWrapper();
+}
+
+export async function glfwMakeContextCurrent(GLFWWindow: GLFWWindowRef) : Promise<void>
+{
+	glfwMakeContextCurrentWrapper(GLFWWindow.ptr);
+}
+
+export async function glfwSwapBuffers(GLFWWindow: GLFWWindowRef) : Promise<void>
+{
+	glfwSwapBuffersWrapper(GLFWWindow.ptr);
 }

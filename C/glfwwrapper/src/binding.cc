@@ -15,7 +15,8 @@ using v8::Value;
 using v8::Number;
 using v8::Boolean;
 
-void glfwInitWrapper(const FunctionCallbackInfo<Value>& args) {
+void glfwInitWrapper(const FunctionCallbackInfo<Value>& args)
+{
 	Isolate* isolate = args.GetIsolate();
 	
 	int res = glfwInit();
@@ -52,7 +53,8 @@ void glfwCreateWindowWrapper(const FunctionCallbackInfo<Value>& args) {
 	args.GetReturnValue().Set(Number::New(isolate, (double)((uint64_t)win)));
 }
 
-void glfwWindowShouldCloseWrapper(const FunctionCallbackInfo<Value>& args) {
+void glfwWindowShouldCloseWrapper(const FunctionCallbackInfo<Value>& args)
+{
 	Isolate* isolate = args.GetIsolate();
 
 	GLFWwindow* win = (GLFWwindow*)((uint64_t)(args[0].As<Number>()->Value()));
@@ -62,10 +64,32 @@ void glfwWindowShouldCloseWrapper(const FunctionCallbackInfo<Value>& args) {
 	args.GetReturnValue().Set(Boolean::New(isolate, res));
 }
 
-void glfwPollEventsWrapper(const FunctionCallbackInfo<Value>& args) {
+void glfwPollEventsWrapper(const FunctionCallbackInfo<Value>& args)
+{
 	Isolate* isolate = args.GetIsolate();
 
 	glfwPollEvents();
+}
+
+void glfwTerminateWrapper(const FunctionCallbackInfo<Value>& args)
+{
+	Isolate* isolate = args.GetIsolate();
+
+	glfwTerminate();
+}
+
+void glfwMakeContextCurrentWrapper(const FunctionCallbackInfo<Value>& args)
+{
+	Isolate* isolate = args.GetIsolate();
+
+	glfwMakeContextCurrent((GLFWwindow*)((uint64_t)(args[0].As<Number>()->Value())));
+}
+
+void glfwSwapBuffersWrapper(const FunctionCallbackInfo<Value>& args)
+{
+	Isolate* isolate = args.GetIsolate();
+
+	glfwSwapBuffers((GLFWwindow*)((uint64_t)(args[0].As<Number>()->Value())));
 }
 
 void Initialize(Local<Object> exports) {
@@ -73,6 +97,9 @@ void Initialize(Local<Object> exports) {
 	NODE_SET_METHOD(exports, "glfwCreateWindowWrapper", glfwCreateWindowWrapper);
 	NODE_SET_METHOD(exports, "glfwWindowShouldCloseWrapper", glfwWindowShouldCloseWrapper);
 	NODE_SET_METHOD(exports, "glfwPollEventsWrapper", glfwPollEventsWrapper);
+	NODE_SET_METHOD(exports, "glfwTerminateWrapper", glfwTerminateWrapper);
+	NODE_SET_METHOD(exports, "glfwMakeContextCurrentWrapper", glfwMakeContextCurrentWrapper);
+	NODE_SET_METHOD(exports, "glfwSwapBuffersWrapper", glfwSwapBuffersWrapper);
 }
 
 NODE_MODULE(NODE_GYP_MODULE_NAME, Initialize)
